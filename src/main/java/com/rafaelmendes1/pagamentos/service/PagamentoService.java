@@ -16,7 +16,7 @@ public class PagamentoService {
 
     @Autowired
     private PagamentoRepository repository;
-    
+
     private ModelMapper modelMapper;
 
     public Page<PagamentoDto> obter(Pageable paginacao) {
@@ -32,7 +32,7 @@ public class PagamentoService {
         return modelMapper.map(pagamento, PagamentoDto.class);
     }
 
-    public PagamentoDto criarPagamento(PagamentoDto dto) {
+    public PagamentoDto criar(PagamentoDto dto) {
         Pagamento pagamento = modelMapper.map(dto, Pagamento.class);
         pagamento.setStatus(Status.CRIADO);
         repository.save(pagamento);
@@ -40,7 +40,7 @@ public class PagamentoService {
         return modelMapper.map(pagamento, PagamentoDto.class);
     }
 
-    public PagamentoDto atualizarPagamento(Long id, PagamentoDto dto) {
+    public PagamentoDto atualizar(Long id, PagamentoDto dto) {
         Pagamento pagamento = modelMapper.map(dto, Pagamento.class);
         pagamento.setId(id);
         pagamento = repository.save(pagamento);
@@ -48,7 +48,7 @@ public class PagamentoService {
         return modelMapper.map(pagamento, PagamentoDto.class);
     }
 
-    public void exlcuirPagamento(Long id) {
+    public void excluir(Long id) {
         repository.deleteById(id);
     }
 }
