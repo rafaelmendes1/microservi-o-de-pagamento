@@ -17,6 +17,7 @@ public class PagamentoService {
     @Autowired
     private PagamentoRepository repository;
 
+    @Autowired
     private ModelMapper modelMapper;
 
     public Page<PagamentoDto> obter(Pageable paginacao) {
@@ -27,7 +28,7 @@ public class PagamentoService {
 
     public PagamentoDto obterPorId(Long id) {
         Pagamento pagamento = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(EntityNotFoundException::new);
 
         return modelMapper.map(pagamento, PagamentoDto.class);
     }
