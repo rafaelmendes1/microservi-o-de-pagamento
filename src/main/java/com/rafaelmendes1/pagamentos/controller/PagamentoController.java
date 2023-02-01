@@ -2,6 +2,7 @@ package com.rafaelmendes1.pagamentos.controller;
 
 import com.rafaelmendes1.pagamentos.dto.PagamentoDto;
 import com.rafaelmendes1.pagamentos.service.PagamentoService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -49,5 +50,11 @@ public class PagamentoController {
     public ResponseEntity<PagamentoDto> remover(@PathVariable @NotNull Long id) {
         service.excluir(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/confirmar")
+    @CircuitBreaker(name = "atualizaPedido", fallbackMethod = "")
+    public void confirmarPagamento(@PathVariable @NotNull Long id){
+        service.confirmarPagamento(id);
     }
 }
